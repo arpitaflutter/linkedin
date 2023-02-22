@@ -18,7 +18,7 @@ class _homeState extends State<home> {
   TextEditingController txtcname = TextEditingController();
   TextEditingController txtqts = TextEditingController();
 
-  String path = "";
+  String image = "";
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _homeState extends State<home> {
               children: [
                 SizedBox(height: 15,),
                 CircleAvatar(
-                  backgroundImage: FileImage(File("$path")),backgroundColor: Colors.cyan,radius: 50,
+                  backgroundImage: FileImage(File("$image")),backgroundColor: Colors.cyan,radius: 50,
                 ),
                 SizedBox(height: 15,),
                 ElevatedButton(onPressed: () async{
@@ -44,7 +44,7 @@ class _homeState extends State<home> {
                   XFile? xfile = await p2.pickImage(source: ImageSource.gallery);
 
                   setState(() {
-                    path = xfile!.path;
+                    image = xfile!.path;
                   });
                 },
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.cyan.shade700,fixedSize: Size.fromHeight(50),),
@@ -87,7 +87,7 @@ class _homeState extends State<home> {
                 ),
                 SizedBox(height: 20,),
                 ElevatedButton(onPressed:  () {
-                  Postmodel p1 = Postmodel(n1 : txtname.text, c1: txtcname.text, q1: txtqts.text, i1: txtusrid.text);
+                  Postmodel p1 = Postmodel(n1 : txtname.text, c1: txtcname.text, q1: txtqts.text, i1: txtusrid.text,path: image);
 
                   Navigator.pushNamed(context, 'data',arguments: p1);
                 },

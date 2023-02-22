@@ -1,5 +1,6 @@
+import 'dart:io';
 import 'dart:typed_data';
-
+import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -33,7 +34,7 @@ class _dataState extends State<data> {
               padding: EdgeInsets.all(10.0),
               child: IconButton(
                 onPressed: () {
-                  globalKey;
+                  captureImage();
                 }, icon: Icon(Icons.save),
               ),
             )
@@ -55,13 +56,7 @@ class _dataState extends State<data> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          height: 120,width: 120,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(60),
-                            color: Colors.white,
-                          ),
-                        ),
+                       CircleAvatar(radius: 50,backgroundImage: FileImage(File("${p1.path}")),),
                         SizedBox(width: 15,),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,9 +83,9 @@ class _dataState extends State<data> {
 
      RenderRepaintBoundary? boundary = globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary?;
 
-     final ui.Image image = await boundary?.toImage();
+     final ui.Image? image = await boundary?.toImage();
 
-     final ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+     final ByteData? byteData = await image!.toByteData(format: ui.ImageByteFormat.png);
     var pngBytes = byteData!.buffer.asUint8List();
 
     final result = await ImageGallerySaver.saveImage(pngBytes,name: "My Post.png",quality: 50);
